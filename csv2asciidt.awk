@@ -1,6 +1,11 @@
+#!/usr/bin/awk -f
 
 # Setting CSVEVENFIELDS to anything will warn if fields are uneven
 # Setting CSVEVENFIELDS to 2 will exit
+# Setting FILESEPARATOR will output the ascii file separator in between each file
+# ftm I've never had to use this so its not modifiable
+# Setting OFS will output that OFS
+# Setting ORS will output that ORS
 
 # ---------- Units/csv.awk
 
@@ -8,13 +13,16 @@
 
 BEGIN {
  FS		= "\037"
- OFS	= "\x1f" # output field separator
- ORS	= "\x1e" # output record separator
+ 
+ OFS	= ENVIRON["OFS"] ? ENVIRON["OFS"] : "\x1f" # output field separator
+ ORS	= ENVIRON["ORS"] ? ENVIRON["ORS"] : "\x1e" # output record separator
 }
 
 lastfile != FILENAME {
- printf FILENAME "\x1c" # output file separator
- lastfile=FILENAME
+ if (ENVIRON["FILESEPARATOR"]) {
+  printf FILENAME "\x1c" # output file separator
+  lastfile=FILENAME
+ }
 }
 
 # Multi-Line String
@@ -61,4 +69,14 @@ END {
  }
 }
 
-{ print }
+# clear double "" which means a single "
+# get rid of the starting " and ending " if any
+{ # there should be an option indicating the type of csv file, sometimes this isn't necessary
+ for (i=NF+1;--i;) {
+  if ($i ~ /^".+"$/) $i = substr($i,2,length($i)-2 ) # enough for most occassions
+  # sub(/^"/,"",$i);sub(/"$/,"",$i)
+  gsub(/""/,"\"",$i)
+ }
+ print
+}
+
