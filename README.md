@@ -29,6 +29,10 @@ when you use format2asciidt, the characters should behave like so.
  Field Separator:	1F (Unit Separator)
 
 
+# Bugs
+ There is an assumption that the text will not have the control characters
+
+
 # Examples
 
  ./csv2asciidt.awk file.csv | awk 'BEGIN {RS="\x1e";FS="\x1f"}'
