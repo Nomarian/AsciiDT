@@ -1,0 +1,5 @@
+#!/usr/bin/rc
+
+OFS='	' ORS='
+' csv2asciidt.awk $*
+
