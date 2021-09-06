@@ -7,18 +7,26 @@ This basically converts many file formats to ascii delimited text.
 
 # Description
 
-ascii delimited text is a format which uses control characters to delimit the file, any special characters is labeled as such and should be handled by a simple gsub.
+ascii delimited text is an intermediary format which uses control characters to delimit the file.
 
 
 # Benefits
 
 Using control characters to label means there is no need for parsing. This leads to a speedup in some cases and the handling by any programming language without a requirement for huge libraries.
 
+
 # Formats
+
+when you use format2asciidt, the characters should behave like so.
+
 
 ## CSV
  Record Separator: 1E (Record Separator)
- Field Separator: 1f (Unit Separator)
+ Field Separator: 1F (Unit Separator)
+
+## TSV
+ Record Separator:  1E (Record Separator)
+ Field Separator:	1F (Unit Separator)
 
 
 # Examples
