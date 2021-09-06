@@ -31,6 +31,7 @@ when you use format2asciidt, the characters should behave like so.
 
 # Bugs
  There is an assumption that the text will not have the control characters
+ having the characters would mean having an escape character. defeating the purpose of the text
 
 
 # Examples
